@@ -18,10 +18,10 @@ const NoteState = (props) => {
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYwZDMzZmUwZWMyYTU0ZTIyYzRiNmNhIn0sImlhdCI6MTcxMjMwODYxNX0.bDlu8PEDsa6P38HVKDWnXWFhoac_SVoXOro10_WCe08"
       },
     });
-    const json =await response.json(); 
-    console.log(Object.values(json));
+    const note =await response.json(); 
+    // console.log(Object.values(note));
 
-    setnotes(json)
+    setnotes(note)
   }
 
   
@@ -39,16 +39,7 @@ const NoteState = (props) => {
       body: JSON.stringify({title, description, tag}), // body data type must match "Content-Type" header
     });
     const json = await response.json();
-    console.log(json);
-    const note = {
-      "_id": "66106349a19bab11c7978923ca3ef689",
-      "user": "660d33fe0ec2a54e22c4b6ca",
-      "title": title,
-      "description": description,
-      "tag": tag,
-      "date": "2024-04-05T20:47:05.899Z",
-      "__v": 0
-    }
+    const note = json;
     setnotes(notes.concat(note))
   }
 
@@ -83,7 +74,7 @@ const NoteState = (props) => {
       body: JSON.stringify({id, title, description, tag}), // body data type must match "Content-Type" header
     });
     const json = await response.json();
-    console.log(json);
+    // console.log(json);
 
     let newNotes = await JSON.parse(JSON.stringify(notes));
 

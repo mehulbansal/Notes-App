@@ -77,6 +77,9 @@ function Notes() {
             <div>
                 <div className="row">
                     <h2>Your Notes</h2>
+                    <div className="container">
+                    {notes.length === 0 && 'No Notes to display'}
+                    </div>
                     {notes.map((notes) => {
                         return <NoteItem key={notes._id} note={notes} updateNote={updateNote} />
                     })}
