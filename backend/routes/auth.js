@@ -21,8 +21,8 @@ router.post('/createUser', [
     }
     // Check duplicate email entries.
 
+    let success = false;
     try{
-
     let user = await User.findOne({email: req.body.email});
     if(user){
         return res.status(400).json({message: "This email has already been used"});
@@ -46,7 +46,8 @@ router.post('/createUser', [
       const token =  jwt.sign(data, JWT_SECRET);
     //   console.log(token);
     //   res.json(user)
-        res.json({token});
+        success = true;
+        res.json({success, token});
 
     }
     catch(error){
@@ -69,15 +70,15 @@ router.post('/authUser', [
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-
+    let success = false;
     const {email, password} = req.body;
     try{
         let user =await User.findOne({email});
         if(!user){
-            return res.status(400).json({error: "Invalid credentials"});
+            return res.status(400).json({success, error: "Invalid credentials"});
         }
         const passwordCompare = await bcrypt.compare(password, user.password);
-        if(!passwordCompare) return res.status(400).json({error: "Invalid credentials"});
+        if(!passwordCompare) return res.status(400).json({success, error: "Invalid credentials"});
         
         const data = {
             user: {
@@ -86,11 +87,12 @@ router.post('/authUser', [
         }
     
           const token =  jwt.sign(data, JWT_SECRET);
-          res.send({token});
+          success = true;
+          res.send({success,token});
     }
     catch(error){
         console.log(error);
-        res.status(500).send("Internal Server Error");
+        res.status(500).send({success, error: "Internal Server Error"});
     }
 })
 
