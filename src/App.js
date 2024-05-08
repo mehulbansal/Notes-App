@@ -14,20 +14,32 @@ import NoteState from './context/notes/NoteState.js';
 import Alert from './components/Alert.js';
 import Login from './components/Login.js';
 import Singup from './components/Singup.js';
+import { useState } from 'react';
 
 function App() {
+  const [alert, setAlert] = useState(null);
+  const showAlert = (message, type) =>{
+    setAlert({
+      msg:message,
+      type:type
+    })
+    setTimeout(() =>{
+      setAlert(null)
+    },1500)
+  }
+
   return (
     <>
     <NoteState>
       <Router>
         <Navbar />
-        <Alert message="Store all your notes here."/>
+        <Alert alert={alert}/>
         <div className="container">
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<Home showAlert = {showAlert}/>} />
           <Route exact path="/about" element={<About />} />
-          <Route exact path='/login' element={<Login />} />
-          <Route exact path='/signup' element={<Singup />} />
+          <Route exact path='/login' element={<Login showAlert={showAlert}/>} />
+          <Route exact path='/signup' element={<Singup showAlert={showAlert}/>} />
 
         </Routes>
         </div>

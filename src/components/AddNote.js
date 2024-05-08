@@ -10,6 +10,7 @@ function AddNote(props) {
         e.preventDefault();
         addNote(note.title, note.description, note. tag);
         setnote({title:"", description:"", tag:""})
+        props.showAlert("Note added successfully", "primary");
     }
 
     const onchange = (e) =>{

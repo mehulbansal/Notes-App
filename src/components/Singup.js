@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {useNavigate} from 'react-router-dom';
-function Singup() {
+function Singup(props) {
   const host = 'http://localhost:5000/';
   let navigate = useNavigate();
   const [user, setUser] = useState({name:"", email:"", password:"", cpassword:""})
@@ -21,11 +21,13 @@ function Singup() {
         console.log(json);
         if(json.success){
           localStorage.setItem('token',json.token);
+          props.showAlert("Account Created Successfully ", "danger");
           navigate('/');
       }
     }
       else{
-        alert("Password didn't match");
+          props.showAlert("Invalid Credentials", "danger");
+
       }
   }
 

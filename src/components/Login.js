@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
 
-function Login () {
+function Login (props) {
     const host = 'http://localhost:5000/';
     let navigate = useNavigate();
     const [credentials, setCredentials] = useState({email:"", password:""})
@@ -25,6 +25,10 @@ function Login () {
         if(json.success){
             localStorage.setItem('token',json.token);
             navigate('/');
+            props.showAlert("Login Successful", "success");
+        }
+        else{
+            props.showAlert("Check Credentials", "danger");
         }
     }
 
